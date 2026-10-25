@@ -40,12 +40,9 @@ export const COMMANDS: Command[] = [
   { id: "driver", rarity: "R", icon: "🚗", title: "ขับรถให้ 1 วัน", detail: "วันนี้เป็นคนขับส่วนตัว ไปไหนไปด้วย นั่งสบายๆ ได้เลย" },
   { id: "dishes", rarity: "R", icon: "🍽️", title: "ล้างจานให้ 1 วัน", detail: "จานทุกใบของวันนี้ ยกให้เตยหมด" },
   { id: "snack-run", rarity: "R", icon: "🧋", title: "ไปซื้อของกินที่อยากกินมาให้", detail: "อยากกินอะไรตอนไหน สั่งมา เดี๋ยวไปซื้อมาเสิร์ฟถึงที่" },
-  { id: "coffee", rarity: "R", icon: "☕", title: "ชงกาแฟ/เครื่องดื่มมาเสิร์ฟ", detail: "บาริสต้าส่วนตัว เมนูตามใจลูกค้าคนเดียว" },
   { id: "shoulder", rarity: "R", icon: "💆‍♂️", title: "นวดไหล่ 5 นาที", detail: "คลายเมื่อยจากงาน ไม่จับเวลาโกง" },
-  { id: "game-buddy", rarity: "R", icon: "🎮", title: "เล่นเกมด้วยกัน 1 ชั่วโมง", detail: "เกมอะไรก็ได้ที่เบบี๋เลือก ห้ามบ่นว่าเบื่อ" },
   { id: "remote", rarity: "R", icon: "📺", title: "สิทธิ์เลือกหนัง/ซีรีส์", detail: "เลือกเรื่องไหนก็ดูด้วย ไม่ค้าน ไม่หลับก่อนจบ" },
   { id: "laundry", rarity: "R", icon: "👕", title: "ซักผ้า + พับผ้าให้", detail: "เครื่องซักผ้า อบผ้าอัตโนมือ" },
-  { id: "photographer", rarity: "R", icon: "📸", title: "ตากล้องส่วนตัว", detail: "ถ่ายรูปหล่อๆ ให้ 1 เซ็ต" },
   { id: "breakfast", rarity: "R", icon: "🍳", title: "ทำอาหารเช้าให้", detail: "ตื่นมาเจอมื้อเช้าพร้อมกิน" },
   { id: "hug-on-demand", rarity: "R", icon: "🤗", title: "กอดตามสั่ง 1 วัน", detail: "ขอกอดตอนไหนต้องได้กอด ห้ามปฏิเสธ" },
 
