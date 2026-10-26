@@ -95,7 +95,7 @@ export default function QuotaRoll({
         <span className="round-tag">ROUND 1 / 2</span>
         <h1 className="round-title display">QUOTA SUMMON</h1>
         <p className="round-desc">
-          สุ่มจำนวนครั้งที่เธอจะ &ldquo;ใช้งานฉัน&rdquo; ได้
+          สุ่มจำนวนครั้งที่เบบี๋จะ &ldquo;ใช้งานเตย&rdquo; ได้
           <br />
           {QUOTA_TIERS.map((t) => `${t.value}`).join(" / ")} ครั้ง · สุ่มได้ครั้งเดียวเท่านั้น!
         </p>

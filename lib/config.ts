@@ -51,16 +51,16 @@ export const COMMANDS: Command[] = [
   { id: "full-massage", rarity: "SR", icon: "🧴", title: "นวดตัวเต็มๆ 15 นาที", detail: "นวดแบบจัดเต็ม มีน้ำมันหอมระเหยด้วย" },
   { id: "no-chores", rarity: "SR", icon: "🛋️", title: "Day Off จากงานบ้าน", detail: "วันนี้ไม่ต้องแตะงานบ้านเลยสักอย่าง" },
   { id: "darling-day", rarity: "SR", icon: "💕", title: "เรียก \"ที่รัก\" ทั้งวัน", detail: "ทุกครั้งที่เรียก ต้องเป็น \"ที่รัก\" เท่านั้น" },
-  { id: "win-argument", rarity: "SR", icon: "🏆", title: "ชนะการเถียง 1 ครั้ง", detail: "ใช้คูปองนี้ = เธอถูกเสมอ (ในเรื่องนั้น)" },
+  { id: "win-argument", rarity: "SR", icon: "🏆", title: "ชนะการเถียง 1 ครั้ง", detail: "ใช้คูปองนี้ = เบบี๋ถูกเสมอ (ในเรื่องนั้น)" },
   { id: "cancel-sulk", rarity: "SR", icon: "🕊️", title: "บัตรยกเลิกงอน", detail: "ใช้ได้ทันที เตยต้องหายงอนภายใน 5 นาที" },
-  { id: "his-date", rarity: "SR", icon: "📍", title: "เดทตามแผนของเธอ", detail: "อยากไปไหน ทำอะไร ไปด้วยหมด ไม่มีบ่น" },
+  { id: "his-date", rarity: "SR", icon: "📍", title: "เดทตามแผนของเบบี๋", detail: "อยากไปไหน ทำอะไร ไปด้วยหมด ไม่มีบ่น" },
 
   // ----- SSR -----
-  { id: "full-date", rarity: "SSR", icon: "🌹", title: "เดททั้งวัน ฉันวางแผน + จ่ายเอง", detail: "เซอร์ไพรส์ตั้งแต่เช้าจนดึก" },
+  { id: "spa-day", rarity: "SSR", icon: "🧖‍♂️", title: "Spa Day ทั้งวัน", detail: "พาไปนวดสปาแบบจัดเต็ม" },
   { id: "yes-day", rarity: "SSR", icon: "✅", title: "Yes Day", detail: "1 วันเต็ม ขออะไร (ที่สมเหตุสมผล) ฉันตอบ Yes ทุกอย่าง" },
-  { id: "love-letter", rarity: "SSR", icon: "💌", title: "จดหมายรักเขียนมือ", detail: "จดหมายยาวๆ จากใจ เขียนด้วยลายมือฉันเอง" },
+  { id: "trip", rarity: "SSR", icon: "🏖️", title: "ทริปเซอร์ไพรส์ 1 วัน", detail: "ไม่บอกล่วงหน้าว่าไปไหน แค่ขึ้นรถมาก็พอ" },
   { id: "surprise-gift", rarity: "SSR", icon: "🎁", title: "ของขวัญเซอร์ไพรส์", detail: "ของขวัญที่ไม่รู้ล่วงหน้า รอลุ้นได้เลย" },
-  { id: "wildcard", rarity: "SSR", icon: "🃏", title: "WILDCARD — ขออะไรก็ได้ 1 อย่าง", detail: "เขียนคำขอของเธอเองได้เลย (ในขอบเขตที่ทำได้จริงนะ)", wildcard: true },
+  { id: "wildcard", rarity: "SSR", icon: "🃏", title: "WILDCARD — ขออะไรก็ได้ 1 อย่าง", detail: "เขียนคำขอของเบบี๋เองได้เลย (ในขอบเขตที่ทำได้จริงนะ)", wildcard: true },
 ];
 
 // ---------- จดหมายวันเกิด ----------

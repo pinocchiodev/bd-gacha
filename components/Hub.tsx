@@ -170,7 +170,7 @@ export default function Hub({
                       className="note-input"
                       rows={2}
                       maxLength={200}
-                      placeholder="เขียนคำขอของเธอที่นี่…"
+                      placeholder="เขียนคำขอที่นี่…"
                       defaultValue={c.note ?? ""}
                       disabled={c.done}
                       onBlur={(e) => saveNote(c, e.target.value)}

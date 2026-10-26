@@ -49,7 +49,7 @@ export default function Login({ onSuccess, notice = "" }: { onSuccess: () => voi
               id="u"
               autoComplete="username"
               autoCapitalize="none"
-              placeholder="ชื่อของเธอ"
+              placeholder="ชื่ออออออ"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
