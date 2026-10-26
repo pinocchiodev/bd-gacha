@@ -4,6 +4,7 @@ import { COMMANDS } from "@/lib/config";
 import type { Coupon, GameState } from "@/lib/store";
 import DrawModal from "./DrawModal";
 import { sfx } from "./sound";
+import { gameAction } from "./api";
 
 type Tab = "pending" | "done" | "all";
 
@@ -18,14 +19,7 @@ function fmt(iso?: string) {
   });
 }
 
-async function act(body: Record<string, unknown>) {
-  const r = await fetch("/api/game", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  return r.json();
-}
+const act = gameAction;
 
 export default function Hub({
   state,

@@ -4,6 +4,7 @@ import { QUOTA_TIERS, type Rarity } from "@/lib/config";
 import type { GameState } from "@/lib/store";
 import { Confetti, Flash } from "./Fx";
 import { sfx } from "./sound";
+import { gameAction } from "./api";
 
 type Phase = "idle" | "charging" | "spinning" | "revealed";
 
@@ -34,11 +35,7 @@ export default function QuotaRoll({
     sfx.charge(2);
 
     const [res] = await Promise.all([
-      fetch("/api/game", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "roll" }),
-      }).then((r) => r.json()),
+      gameAction({ action: "roll" }),
       new Promise((r) => setTimeout(r, 2000)),
     ]);
 

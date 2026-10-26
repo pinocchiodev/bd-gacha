@@ -2,10 +2,10 @@
 import { useState } from "react";
 import { sfx } from "./sound";
 
-export default function Login({ onSuccess }: { onSuccess: () => void }) {
+export default function Login({ onSuccess, notice = "" }: { onSuccess: () => void; notice?: string }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(notice);
   const [loading, setLoading] = useState(false);
   const [shake, setShake] = useState(false);
 

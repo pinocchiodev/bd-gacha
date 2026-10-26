@@ -4,6 +4,7 @@ import { COMMANDS, type Rarity } from "@/lib/config";
 import type { Coupon, GameState } from "@/lib/store";
 import { Confetti, Flash } from "./Fx";
 import { sfx } from "./sound";
+import { gameAction } from "./api";
 
 const RARITY_TEXT: Record<Rarity, string> = { R: "R", SR: "SR", SSR: "SSR" };
 
@@ -26,11 +27,7 @@ export default function DrawModal({
     setPhase("shaking");
     sfx.charge(1.6);
     const [res] = await Promise.all([
-      fetch("/api/game", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "draw" }),
-      }).then((r) => r.json()),
+      gameAction({ action: "draw" }),
       new Promise((r) => setTimeout(r, 1600)),
     ]);
     if (!res.ok) {

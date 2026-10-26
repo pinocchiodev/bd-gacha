@@ -7,6 +7,7 @@ import QuotaRoll from "@/components/QuotaRoll";
 import Hub from "@/components/Hub";
 import { Embers } from "@/components/Fx";
 import { isMuted, setMuted, sfx } from "@/components/sound";
+import { gameAction, UNAUTHORIZED_EVENT } from "@/components/api";
 
 type View = "loading" | "login" | "letter" | "quota" | "hub" | "reread";
 
@@ -18,6 +19,7 @@ export default function Home() {
   const [muted, setMutedState] = useState(false);
   const [hasMusic, setHasMusic] = useState(false);
   const [musicOn, setMusicOn] = useState(false);
+  const [sessionExpired, setSessionExpired] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const routeFor = (s: GameState): View => (!s.letterSeen ? "letter" : s.quota === null ? "quota" : "hub");
@@ -33,6 +35,17 @@ export default function Home() {
     setRole(data.role);
     setPersistent(data.persistent);
     setView(routeFor(data.state));
+  }, []);
+
+  // session หมดอายุ (เช่น เปลี่ยน env แล้ว redeploy) → กลับไปหน้าล็อคอิน
+  useEffect(() => {
+    const onUnauthorized = () => {
+      setState(null);
+      setSessionExpired(true);
+      setView("login");
+    };
+    window.addEventListener(UNAUTHORIZED_EVENT, onUnauthorized);
+    return () => window.removeEventListener(UNAUTHORIZED_EVENT, onUnauthorized);
   }, []);
 
   useEffect(() => {
@@ -77,11 +90,7 @@ export default function Home() {
 
   async function letterDone() {
     if (state && !state.letterSeen) {
-      const r = await fetch("/api/game", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "letter-seen" }),
-      }).then((r) => r.json());
+      const r = await gameAction({ action: "letter-seen" });
       if (r.ok) {
         setState(r.state);
         setView(routeFor(r.state));
@@ -125,7 +134,9 @@ export default function Home() {
 
       {view === "login" && (
         <Login
+          notice={sessionExpired ? "เซสชันหมดอายุ กรุณาล็อคอินใหม่อีกครั้ง" : ""}
           onSuccess={() => {
+            setSessionExpired(false);
             startMusic();
             load();
           }}
