@@ -139,10 +139,6 @@ button {
 
 /* ---------- login ---------- */
 .login-card { padding: 36px 24px 28px; text-align: center; }
-.countdown-card {
-  padding: 32px 20px 28px;
-  text-align: center;
-}
 .login-title {
   font-size: clamp(2.6rem, 11vw, 4rem);
   line-height: 0.95;
@@ -154,31 +150,6 @@ button {
   filter: drop-shadow(0 4px 18px rgba(229, 17, 45, 0.5));
 }
 .login-sub { color: var(--muted); margin: 0 0 26px; font-size: 0.95rem; }
-.countdown-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 18px;
-}
-.countdown-box {
-  background: rgba(0, 0, 0, 0.28);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 16px 8px 12px;
-}
-.countdown-box span {
-  display: block;
-  font-size: clamp(1.6rem, 5vw, 2.4rem);
-  font-weight: 700;
-  color: #fff;
-  line-height: 1;
-}
-.countdown-box small {
-  display: block;
-  margin-top: 8px;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-}
 .field { text-align: left; margin-bottom: 14px; }
 .field label { display: block; font-size: 0.82rem; color: var(--muted); margin: 0 0 6px 6px; }
 .field input {

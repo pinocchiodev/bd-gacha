@@ -7,9 +7,8 @@ import QuotaRoll from "@/components/QuotaRoll";
 import Hub from "@/components/Hub";
 import { Embers } from "@/components/Fx";
 import { isMuted, setMuted, sfx } from "@/components/sound";
-import { getCountdownParts, isAccessUnlocked } from "@/lib/countdown";
 
-type View = "loading" | "locked" | "login" | "letter" | "quota" | "hub" | "reread";
+type View = "loading" | "login" | "letter" | "quota" | "hub" | "reread";
 
 export default function Home() {
   const [view, setView] = useState<View>("loading");
@@ -19,20 +18,13 @@ export default function Home() {
   const [muted, setMutedState] = useState(false);
   const [hasMusic, setHasMusic] = useState(false);
   const [musicOn, setMusicOn] = useState(false);
-  const [countdown, setCountdown] = useState(() => getCountdownParts());
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const routeFor = (s: GameState): View => (!s.letterSeen ? "letter" : s.quota === null ? "quota" : "hub");
 
   const load = useCallback(async () => {
-    if (!isAccessUnlocked()) {
-      setView("locked");
-      setCountdown(getCountdownParts());
-      return;
-    }
-
     const res = await fetch("/api/state", { cache: "no-store" });
-    if (res.status === 401 || res.status === 403) {
+    if (res.status === 401) {
       setView("login");
       return;
     }
@@ -42,24 +34,6 @@ export default function Home() {
     setPersistent(data.persistent);
     setView(routeFor(data.state));
   }, []);
-
-  useEffect(() => {
-    const tick = () => {
-      if (!isAccessUnlocked()) {
-        setCountdown(getCountdownParts());
-        setView("locked");
-        return;
-      }
-
-      if (view === "locked") {
-        setView("login");
-      }
-    };
-
-    tick();
-    const interval = window.setInterval(tick, 1000);
-    return () => window.clearInterval(interval);
-  }, [view]);
 
   useEffect(() => {
     setMutedState(isMuted());
@@ -146,37 +120,6 @@ export default function Home() {
       {view === "loading" && (
         <div className="screen">
           <div className="spinner" />
-        </div>
-      )}
-
-      {view === "locked" && (
-        <div className="screen">
-          <div className="container">
-            <div className="panel countdown-card">
-              <span className="heart-logo">⏳</span>
-              <h1 className="login-title display">OPENING SOON</h1>
-              <p className="login-sub">เว็บไซต์จะเปิดให้ใช้งานได้เมื่อวันที่ 27/10/2026 เวลา 00:00</p>
-
-              <div className="countdown-grid" aria-live="polite">
-                <div className="countdown-box">
-                  <span>{String(countdown.days).padStart(2, "0")}</span>
-                  <small>วัน</small>
-                </div>
-                <div className="countdown-box">
-                  <span>{String(countdown.hours).padStart(2, "0")}</span>
-                  <small>ชั่วโมง</small>
-                </div>
-                <div className="countdown-box">
-                  <span>{String(countdown.minutes).padStart(2, "0")}</span>
-                  <small>นาที</small>
-                </div>
-                <div className="countdown-box">
-                  <span>{String(countdown.seconds).padStart(2, "0")}</span>
-                  <small>วินาที</small>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       )}
 

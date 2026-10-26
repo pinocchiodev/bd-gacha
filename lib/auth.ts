@@ -1,6 +1,5 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import { cookies } from "next/headers";
-import { isAccessUnlocked } from "@/lib/countdown";
 
 export type Role = "zend" | "admin";
 const COOKIE = "zend_session";
@@ -23,7 +22,8 @@ export function safeEqual(a: string, b: string) {
   return timingSafeEqual(ab, bb);
 }
 
-export function checkCredentials(username: string, password: string): Role | null {  if (!isAccessUnlocked()) return null;  const u = username.trim().toLowerCase();
+export function checkCredentials(username: string, password: string): Role | null {
+  const u = username.trim().toLowerCase();
   const p = password.trim().replace(/[\s/.\-]/g, ""); // รับ 14/02/1998 หรือ 14-02-1998 ด้วย
   const zendPw = (process.env.ZEND_PASSWORD || "").trim();
   const adminPw = (process.env.ADMIN_PASSWORD || "").trim();
@@ -50,7 +50,6 @@ export async function clearSession() {
 }
 
 export async function getRole(): Promise<Role | null> {
-  if (!isAccessUnlocked()) return null;
   const jar = await cookies();
   const raw = jar.get(COOKIE)?.value;
   if (!raw) return null;
