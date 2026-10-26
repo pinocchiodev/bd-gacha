@@ -239,6 +239,12 @@ export async function renderStory(state: GameState): Promise<HTMLCanvasElement> 
   ctx.font = THAI(600, 34);
   ctx.fillStyle = "#f1dfe2";
   ctx.fillText("ครั้ง", qx + 52 + numW, qy + 158);
+  if (state.bonusQuota > 0) {
+    const kw = ctx.measureText("ครั้ง").width;
+    ctx.font = THAI(700, 30);
+    ctx.fillStyle = RARITY_COLOR.SSR;
+    ctx.fillText(`+${state.bonusQuota} 🥚 bonus`, qx + 52 + numW + kw + 18, qy + 158);
+  }
 
   chip(ctx, RARITY_NAME[qRarity].toUpperCase(), qColor, qx + qw - 40, qy + 62, 24);
 
@@ -415,7 +421,15 @@ export async function renderPdfPages(state: GameState): Promise<HTMLCanvasElemen
       ctx.stroke();
 
       const cells: [string, string, string][] = [
-        ["โควต้า", `${state.quota ?? 0}`, state.quotaRarity ? `${state.quotaRarity} · ${qTier?.title ?? ""}` : ""],
+        [
+          "โควต้า",
+          state.bonusQuota > 0 ? `${state.quota ?? 0}+${state.bonusQuota}` : `${state.quota ?? 0}`,
+          state.bonusQuota > 0
+            ? `${state.quotaRarity ?? ""} · 🥚 Easter Egg`
+            : state.quotaRarity
+              ? `${state.quotaRarity} · ${qTier?.title ?? ""}`
+              : "",
+        ],
         ["SSR", `${c.SSR}`, "Legendary"],
         ["SR", `${c.SR}`, "Super Rare"],
         ["R", `${c.R}`, "Rare"],

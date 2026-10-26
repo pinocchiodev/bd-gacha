@@ -9,5 +9,11 @@ export async function GET() {
   const role = await getRole();
   if (!role) return NextResponse.json({ ok: false }, { status: 401 });
   const state = await getState();
-  return NextResponse.json({ ok: true, role, state, persistent: hasPersistentStore });
+  return NextResponse.json({
+    ok: true,
+    role,
+    state,
+    persistent: hasPersistentStore,
+    secretEnabled: !!process.env.ANNIVERSARY_CODE,
+  });
 }

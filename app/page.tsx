@@ -16,6 +16,7 @@ export default function Home() {
   const [state, setState] = useState<GameState | null>(null);
   const [role, setRole] = useState<"zend" | "admin">("zend");
   const [persistent, setPersistent] = useState(true);
+  const [secretEnabled, setSecretEnabled] = useState(false);
   const [muted, setMutedState] = useState(false);
   const [hasMusic, setHasMusic] = useState(false);
   const [musicOn, setMusicOn] = useState(false);
@@ -34,6 +35,7 @@ export default function Home() {
     setState(data.state);
     setRole(data.role);
     setPersistent(data.persistent);
+    setSecretEnabled(!!data.secretEnabled);
     setView(routeFor(data.state));
   }, []);
 
@@ -158,6 +160,7 @@ export default function Home() {
           state={state}
           role={role}
           persistent={persistent}
+          secretEnabled={secretEnabled}
           onState={setState}
           onOpenLetter={() => {
             window.scrollTo({ top: 0 });

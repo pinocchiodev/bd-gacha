@@ -17,6 +17,8 @@ export type GameState = {
   quotaRolledAt: string | null;
   letterSeen: boolean;
   coupons: Coupon[];
+  bonusQuota: number; // จาก Easter Egg
+  secretFoundAt: string | null;
 };
 
 export const EMPTY_STATE: GameState = {
@@ -25,6 +27,8 @@ export const EMPTY_STATE: GameState = {
   quotaRolledAt: null,
   letterSeen: false,
   coupons: [],
+  bonusQuota: 0,
+  secretFoundAt: null,
 };
 
 const KEY = "zend-birthday:state";

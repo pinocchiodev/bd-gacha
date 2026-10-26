@@ -3,7 +3,9 @@ import { randomUUID } from "crypto";
 import { getRole } from "@/lib/auth";
 import { EMPTY_STATE, getState, setState, withLock, type GameState } from "@/lib/store";
 import { drawCommand, rollQuota } from "@/lib/gacha";
-import { COMMANDS } from "@/lib/config";
+import { COMMANDS, SECRET } from "@/lib/config";
+import { totalQuota } from "@/lib/quota";
+import { safeEqual } from "@/lib/auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,6 +20,9 @@ export async function POST(req: Request) {
 
   const body = await req.json().catch(() => ({}));
   const action = String(body.action ?? "");
+
+  // หน่วงนิดนึง: กันเดารหัสลับรัวๆ และเพิ่มความลุ้น
+  if (action === "secret") await new Promise((r) => setTimeout(r, 700));
 
   const result = await withLock(async () => {
     const s: GameState = await getState();
@@ -42,7 +47,7 @@ export async function POST(req: Request) {
 
       case "draw": {
         if (s.quota === null) return err("ต้องสุ่มรอบแรกก่อน");
-        if (s.coupons.length >= s.quota) return err("โควต้าหมดแล้ว");
+        if (s.coupons.length >= totalQuota(s)) return err("โควต้าหมดแล้ว");
         const cmd = drawCommand();
         const coupon = {
           id: randomUUID(),
@@ -72,6 +77,21 @@ export async function POST(req: Request) {
         const cmd = COMMANDS.find((x) => x.id === c.commandId);
         if (!cmd?.wildcard) return err("คูปองนี้เขียนคำขอไม่ได้");
         c.note = String(body.note ?? "").slice(0, 200);
+        await setState(s);
+        return NextResponse.json({ ok: true, state: s });
+      }
+
+      case "secret": {
+        const expected = (process.env.ANNIVERSARY_CODE || "").replace(/[\s/.\-]/g, "");
+        if (!expected) return err("ยังไม่ได้ตั้งรหัสลับ", 404);
+        if (s.quota === null) return err("ต้องสุ่มรอบแรกก่อน");
+        if (s.secretFoundAt) return err("เจอ Easter Egg ไปแล้ว");
+        const code = String(body.code ?? "").replace(/[\s/.\-]/g, "");
+        if (!code || !safeEqual(code, expected)) {
+          return NextResponse.json({ ok: false, wrong: true });
+        }
+        s.bonusQuota = (s.bonusQuota ?? 0) + SECRET.bonus;
+        s.secretFoundAt = now;
         await setState(s);
         return NextResponse.json({ ok: true, state: s });
       }

@@ -728,3 +728,85 @@ button {
 }
 .export-actions { display: flex; flex-direction: column; gap: 10px; }
 .export-loading { display: grid; place-items: center; gap: 12px; padding: 60px 0; color: var(--muted); font-size: .9rem; }
+
+/* ---------- easter egg ---------- */
+.secret-teaser {
+  display: block;
+  margin: 26px auto 0;
+  background: none;
+  border: none;
+  color: rgba(184, 161, 166, 0.55);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  padding: 6px 10px;
+  transition: color 0.2s;
+}
+.secret-teaser:hover { color: var(--SSR); }
+.secret-box {
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px dashed rgba(255, 201, 77, 0.5);
+  background: rgba(40, 26, 4, 0.35);
+  text-align: center;
+  animation: slidein 0.35s ease;
+}
+.secret-box p { margin: 0 0 12px; font-size: 0.9rem; color: #f3dca4; }
+.secret-row { display: flex; gap: 8px; }
+.secret-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 201, 77, 0.4);
+  background: rgba(0, 0, 0, 0.45);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  outline: none;
+}
+.secret-row input:focus { border-color: var(--SSR); box-shadow: 0 0 0 3px rgba(255, 201, 77, 0.2); }
+.secret-msg { min-height: 1.3em; margin-top: 10px; font-size: 0.88rem; color: #ffb1bb; }
+.secret-found {
+  margin: 24px auto 0;
+  width: fit-content;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 201, 77, 0.45);
+  color: var(--SSR);
+  font-size: 0.82rem;
+  background: rgba(60, 40, 0, 0.25);
+}
+.secret-celebrate {
+  position: relative;
+  z-index: 61;
+  text-align: center;
+  max-width: 360px;
+  animation: pop 0.6s cubic-bezier(.2, 1.6, .4, 1);
+}
+.secret-egg {
+  font-size: 5rem;
+  margin: 18px 0 0;
+  animation: wobble 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(255, 201, 77, 0.8));
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+.secret-plus {
+  font-size: 5.5rem;
+  line-height: 0.9;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(255, 201, 77, 0.9);
+}
+.bonus-tag {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 0.35em;
+  vertical-align: middle;
+  color: var(--SSR);
+  letter-spacing: 0.04em;
+}

@@ -5,6 +5,8 @@ import type { Coupon, GameState } from "@/lib/store";
 import DrawModal from "./DrawModal";
 import RatesModal from "./RatesModal";
 import ExportModal from "./ExportModal";
+import SecretBox from "./SecretBox";
+import { totalQuota } from "@/lib/quota";
 import { sfx } from "./sound";
 import { gameAction } from "./api";
 
@@ -27,6 +29,7 @@ export default function Hub({
   state,
   role,
   persistent,
+  secretEnabled = false,
   onState,
   onOpenLetter,
   onLogout,
@@ -34,6 +37,7 @@ export default function Hub({
   state: GameState;
   role: "zend" | "admin";
   persistent: boolean;
+  secretEnabled?: boolean;
   onState: (s: GameState) => void;
   onOpenLetter: () => void;
   onLogout: () => void;
@@ -44,7 +48,7 @@ export default function Hub({
   const [tab, setTab] = useState<Tab>("pending");
   const [busyId, setBusyId] = useState<string | null>(null);
 
-  const quota = state.quota ?? 0;
+  const quota = totalQuota(state);
   const drawn = state.coupons.length;
   const remaining = Math.max(0, quota - drawn);
   const doneCount = state.coupons.filter((c) => c.done).length;
@@ -84,6 +88,7 @@ export default function Hub({
           <div className="counter display">
             {remaining}
             <span className="slash"> / {quota}</span>
+            {state.bonusQuota > 0 && <span className="bonus-tag">🥚+{state.bonusQuota}</span>}
           </div>
           <div style={{ color: "var(--muted)", fontSize: "0.9rem" }}>สิทธิ์สุ่มคำสั่งที่เหลือ</div>
           <div className="progress">
@@ -200,9 +205,19 @@ export default function Hub({
           <button className="btn btn-ghost btn-sm" onClick={onLogout}>ออกจากระบบ</button>
         </div>
 
+        {secretEnabled && <SecretBox state={state} onState={onState} />}
+
         {role === "admin" && (
           <div className="admin-bar">
             <b>โหมดแอดมิน</b> — คุณกำลังดูในฐานะเจ้าของเว็บ ทุกอย่างที่กดจะมีผลจริงเหมือน Zend กด
+            <div style={{ marginTop: 8 }}>
+              Easter Egg:{" "}
+              {!secretEnabled
+                ? "ปิดอยู่ (ยังไม่ได้ตั้ง ANNIVERSARY_CODE)"
+                : state.secretFoundAt
+                  ? "เจอแล้ว 🥚"
+                  : "ยังไม่มีใครเจอ"}
+            </div>
             {!persistent && (
               <div className="warn">
                 ⚠ ยังไม่ได้เชื่อม Redis — ผลสุ่มเก็บในหน่วยความจำชั่วคราว จะหายเมื่อ server รีสตาร์ท
