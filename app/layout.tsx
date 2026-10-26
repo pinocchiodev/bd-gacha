@@ -1,4 +1,12 @@
 import type { Metadata, Viewport } from "next";
+// ฟอนต์ self-host ผ่าน @fontsource (ไม่ต้องพึ่ง Google Fonts และใช้วาดรูป export ได้)
+import "@fontsource/prompt/300.css";
+import "@fontsource/prompt/400.css";
+import "@fontsource/prompt/500.css";
+import "@fontsource/prompt/600.css";
+import "@fontsource/prompt/700.css";
+import "@fontsource/prompt/800.css";
+import "@fontsource/bebas-neue/400.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,15 +25,6 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="th">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Prompt:wght@300;400;500;600;700;800&display=swap"
-        />
-      </head>
       <body>{children}</body>
     </html>
   );

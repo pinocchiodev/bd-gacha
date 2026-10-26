@@ -5,6 +5,7 @@ import type { GameState } from "@/lib/store";
 import { Confetti, Flash } from "./Fx";
 import { sfx } from "./sound";
 import { gameAction } from "./api";
+import RatesModal from "./RatesModal";
 
 type Phase = "idle" | "charging" | "spinning" | "revealed";
 
@@ -25,6 +26,7 @@ export default function QuotaRoll({
   const [rarity, setRarity] = useState<Rarity | null>(state.quotaRarity);
   const [error, setError] = useState("");
   const busy = useRef(false);
+  const [showRates, setShowRates] = useState(false);
 
   async function summon() {
     if (busy.current) return;
@@ -143,9 +145,17 @@ export default function QuotaRoll({
               {phase === "idle" ? "✦ SUMMON ✦" : "กำลังสุ่ม…"}
             </button>
             {error && <div className="err" style={{ marginTop: 12 }}>{error}</div>}
+            {phase === "idle" && (
+              <div>
+                <button className="link-btn" onClick={() => setShowRates(true)}>
+                  📜 ดูอัตราการออก
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>
+      {showRates && <RatesModal state={state} onClose={() => setShowRates(false)} />}
     </div>
   );
 }

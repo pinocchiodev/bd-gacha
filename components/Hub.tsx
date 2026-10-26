@@ -3,6 +3,8 @@ import { useState } from "react";
 import { COMMANDS } from "@/lib/config";
 import type { Coupon, GameState } from "@/lib/store";
 import DrawModal from "./DrawModal";
+import RatesModal from "./RatesModal";
+import ExportModal from "./ExportModal";
 import { sfx } from "./sound";
 import { gameAction } from "./api";
 
@@ -37,6 +39,8 @@ export default function Hub({
   onLogout: () => void;
 }) {
   const [drawing, setDrawing] = useState(false);
+  const [showRates, setShowRates] = useState(false);
+  const [showExport, setShowExport] = useState(false);
   const [tab, setTab] = useState<Tab>("pending");
   const [busyId, setBusyId] = useState<string | null>(null);
 
@@ -100,7 +104,29 @@ export default function Hub({
           >
             {remaining > 0 ? "✦ สุ่มคำสั่ง 1 ใบ ✦" : "ใช้สิทธิ์ครบแล้ว ❤"}
           </button>
+          <button className="link-btn" onClick={() => setShowRates(true)}>
+            📜 ดูอัตราการออก & คำสั่งทั้งหมด
+          </button>
         </section>
+
+        {quota > 0 && (remaining === 0 || role === "admin") && (
+          <div className="keepsake">
+            <h3>{remaining === 0 ? "🎉 สุ่มครบทุกใบแล้ว!" : "🛠 ทดลอง export (เห็นเฉพาะแอดมิน)"}</h3>
+            <p>เก็บผลกาชาเป็นรูป Instagram Story หรือสมุดคูปอง PDF</p>
+            <div className="row">
+              <button
+                className="btn btn-gold"
+                disabled={drawn === 0}
+                onClick={() => {
+                  sfx.click();
+                  setShowExport(true);
+                }}
+              >
+                📸 Export รูป / PDF
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="tabs" role="tablist">
           {(
@@ -190,6 +216,8 @@ export default function Hub({
       </div>
 
       {drawing && <DrawModal onClose={() => setDrawing(false)} onState={onState} />}
+      {showRates && <RatesModal state={state} onClose={() => setShowRates(false)} />}
+      {showExport && <ExportModal state={state} onClose={() => setShowExport(false)} />}
     </div>
   );
 }
